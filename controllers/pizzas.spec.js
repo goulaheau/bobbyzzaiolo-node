@@ -39,7 +39,7 @@ describe('Pizzas\' routes', () => {
 			base64Img.base64('asserts/pizzas/olives-a-la-pizza.jpg', (err, data) => {
 				let pizza = {
 					name       : 'Olives à la pizza',
-					price      : 10,
+					price      : '10',
 					image      : data,
 					ingredients: []
 				};
@@ -61,7 +61,7 @@ describe('Pizzas\' routes', () => {
 				let pizza = {
 					name       : 'Olives à la pizza',
 					description: 'Pizza avec toutes sortes d\'olives.',
-					price      : 10,
+					price      : '10',
 					image      : data,
 					ingredients: []
 				};
@@ -75,7 +75,7 @@ describe('Pizzas\' routes', () => {
 						res.body.name.should.be.eql('Olives à la pizza');
 						res.body.description.should.be.eql(
 							'Pizza avec toutes sortes d\'olives.');
-						res.body.price.should.be.eql(10);
+						res.body.price.should.be.eql('10');
 						res.body.image.should.be.eql(data);
 						res.body.ingredients.length.should.be.eql(0);
 						done();
@@ -90,7 +90,7 @@ describe('Pizzas\' routes', () => {
 				let pizza = new Pizza({
 					name       : 'Pizza aux olives dénoyautées',
 					description: 'Pizza avec des olives dénoyautées.',
-					price      : 7.5,
+					price      : '7.5',
 					image      : data,
 					ingredients: []
 				});
@@ -105,7 +105,7 @@ describe('Pizzas\' routes', () => {
 							res.body.name.should.be.eql('Pizza aux olives dénoyautées');
 							res.body.description.should.be.eql(
 								'Pizza avec des olives dénoyautées.');
-							res.body.price.should.be.eql(7.5);
+							res.body.price.should.be.eql('7.5');
 							res.body.image.should.be.eql(data);
 							res.body.ingredients.length.should.be.eql(0);
 							done();
@@ -121,7 +121,7 @@ describe('Pizzas\' routes', () => {
 				let pizza = new Pizza({
 					name       : 'izza aux olives noires',
 					description: 'Pizza avec des olives noires.',
-					price      : 7.5,
+					price      : '7.5',
 					image      : data,
 					ingredients: []
 				});
@@ -131,7 +131,7 @@ describe('Pizzas\' routes', () => {
 						.send({
 							name       : 'Pizza aux olives noires',
 							description: 'Pizza avec des olives noires.',
-							price      : 7.5,
+							price      : '7.5',
 							image      : data,
 							ingredients: []
 						})
@@ -141,7 +141,7 @@ describe('Pizzas\' routes', () => {
 							res.body.name.should.be.eql('Pizza aux olives noires');
 							res.body.description.should.be.eql(
 								'Pizza avec des olives noires.');
-							res.body.price.should.be.eql(7.5);
+							res.body.price.should.be.eql('7.5');
 							res.body.image.should.be.eql(data);
 							res.body.ingredients.length.should.be.eql(0);
 							done();
@@ -157,7 +157,7 @@ describe('Pizzas\' routes', () => {
 				let pizza = new Pizza({
 					name       : 'izza aux olives vertes',
 					description: 'Pizza avec des olives vertes.',
-					price      : 7.5,
+					price      : '7.5',
 					image      : data,
 					ingredients: []
 				});
@@ -173,7 +173,7 @@ describe('Pizzas\' routes', () => {
 							res.body.name.should.be.eql('Pizza aux olives vertes');
 							res.body.description.should.be.eql(
 								'Pizza avec des olives vertes.');
-							res.body.price.should.be.eql(7.5);
+							res.body.price.should.be.eql('7.5');
 							res.body.image.should.be.eql(data);
 							res.body.ingredients.length.should.be.eql(0);
 							done();
@@ -189,7 +189,7 @@ describe('Pizzas\' routes', () => {
 				let pizza = new Pizza({
 					name       : 'Pizza aux olives pimentées',
 					description: 'Pizza avec des olives pimentées.',
-					price      : 7.5,
+					price      : '7.5',
 					image      : data,
 					ingredients: []
 				});
@@ -202,7 +202,7 @@ describe('Pizzas\' routes', () => {
 							res.body.name.should.be.eql('Pizza aux olives pimentées');
 							res.body.description.should.be.eql(
 								'Pizza avec des olives pimentées.');
-							res.body.price.should.be.eql(7.5);
+							res.body.price.should.be.eql('7.5');
 							res.body.image.should.be.eql(data);
 							res.body.ingredients.length.should.be.eql(0);
 							done();

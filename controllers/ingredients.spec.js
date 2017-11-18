@@ -37,7 +37,7 @@ describe('Ingredients\'s routes', () => {
 		it('should not create an ingredient without weight', done => {
 			let ingredient = {
 				name : 'Olives noires',
-				price: 1
+				price: '1'
 			};
 
 			chai.request(app)
@@ -54,7 +54,7 @@ describe('Ingredients\'s routes', () => {
 			let ingredient = {
 				name  : 'Olives noires',
 				weight: '10 olives',
-				price : 1
+				price : '1'
 			};
 
 			chai.request(app)
@@ -65,7 +65,7 @@ describe('Ingredients\'s routes', () => {
 					res.body.should.have.property('_id');
 					res.body.name.should.be.eql('Olives noires');
 					res.body.weight.should.be.eql('10 olives');
-					res.body.price.should.be.eql(1);
+					res.body.price.should.be.eql('1');
 					done();
 				});
 		});
@@ -76,7 +76,7 @@ describe('Ingredients\'s routes', () => {
 			let ingredient = new Ingredient({
 				name  : 'Olives vertes',
 				weight: '10 olives',
-				price : 1
+				price : '1'
 			});
 
 			ingredient.save((err, ingredient) => {
@@ -88,7 +88,7 @@ describe('Ingredients\'s routes', () => {
 						res.body._id.should.be.eql(`${ingredient._id}`);
 						res.body.name.should.be.eql('Olives vertes');
 						res.body.weight.should.be.eql('10 olives');
-						res.body.price.should.be.eql(1);
+						res.body.price.should.be.eql('1');
 						done();
 					});
 			});
@@ -100,7 +100,7 @@ describe('Ingredients\'s routes', () => {
 			let ingredient = new Ingredient({
 				name  : 'lives noires dénoyautées',
 				weight: '10 olives',
-				price : 1.5
+				price : '1.5'
 			});
 			ingredient.save((err, ingredient) => {
 				chai.request(app)
@@ -108,14 +108,14 @@ describe('Ingredients\'s routes', () => {
 					.send({
 						name  : 'Olives noires dénoyautées',
 						weight: '10 olives',
-						price : 1.5
+						price : '1.5'
 					})
 					.end((err, res) => {
 						res.should.have.status(200);
 						res.body._id.should.be.eql(`${ingredient._id}`);
 						res.body.name.should.be.eql('Olives noires dénoyautées');
 						res.body.weight.should.be.eql('10 olives');
-						res.body.price.should.be.eql(1.5);
+						res.body.price.should.be.eql('1.5');
 						done();
 					});
 			});
@@ -127,7 +127,7 @@ describe('Ingredients\'s routes', () => {
 			let ingredient = new Ingredient({
 				name  : 'lives vertes dénoyautées',
 				weight: '10 olives',
-				price : 1.5
+				price : '1.5'
 			});
 			ingredient.save((err, ingredient) => {
 				chai.request(app)
@@ -140,7 +140,7 @@ describe('Ingredients\'s routes', () => {
 						res.body._id.should.be.eql(`${ingredient._id}`);
 						res.body.name.should.be.eql('Olives vertes dénoyautées');
 						res.body.weight.should.be.eql('10 olives');
-						res.body.price.should.be.eql(1.5);
+						res.body.price.should.be.eql('1.5');
 						done();
 					});
 			});
@@ -152,7 +152,7 @@ describe('Ingredients\'s routes', () => {
 			let ingredient = new Ingredient({
 				name  : 'Olives pimentées',
 				weight: '10 olives',
-				price : 1.5
+				price : '1.5'
 			});
 			ingredient.save((err, ingredient) => {
 				chai.request(app)
@@ -162,7 +162,7 @@ describe('Ingredients\'s routes', () => {
 						res.body._id.should.be.eql(`${ingredient._id}`);
 						res.body.name.should.be.eql('Olives pimentées');
 						res.body.weight.should.be.eql('10 olives');
-						res.body.price.should.be.eql(1.5);
+						res.body.price.should.be.eql('1.5');
 						done();
 					});
 			});
