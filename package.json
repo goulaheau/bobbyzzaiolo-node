@@ -1,0 +1,32 @@
+{
+  "name": "Bobbyzzaiolo NodeJS",
+  "author": {
+    "name": "Enzo Cornand",
+    "email": "goulaheau@gmail.com"
+  },
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "mocha app.spec.js --exit"
+  },
+  "dependencies": {
+    "base64-img": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "config": "^1.28.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-promise-router": "^2.0.0",
+    "joi": "^13.0.1",
+    "mongoose": "^4.12.6",
+    "morgan": "^1.9.0",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.12.1"
+  }
+}
