@@ -44,6 +44,22 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
+### Generate your own documentation
+
+Install globally jsdoc.
+
+```
+npm i jsdoc --save
+```
+
+Now use this command.
+
+```
+jsdoc a-file-to-documentate.js -t ./node_modules/ink-docstrap/template -c jsdoc.json -d doc
+```
+
+You can change the theme by modifying in jsdoc.json the property ``` template ```.
+
 ### Routes
 
 Pizzas' routes:
@@ -86,6 +102,9 @@ project ----------------------- Root folder
 │   │   pizzas.js ------------- Pizzas' controller
 │   │   pizzas.spec.js -------- Pizzas' controller tests
 │
+├────doc ---------------------- Documentation 
+│   │   ...
+│ 
 ├────helpers ------------------ Helpers files
 │   │   router.js ------------- Router validation helper
 │   │   view.js --------------- View helper to know port used

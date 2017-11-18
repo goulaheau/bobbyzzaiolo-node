@@ -1,0 +1,23 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [],
+  "templates": { "cleverLinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true
+    },
+    "systemName"      : "Bobbyzzaiolo NodeJS",
+    "footer"          : "",
+    "navType"         : "vertical",
+    "theme"           : "flatly",
+    "linenums"        : true,
+    "collapseSymbols" : false,
+    "inverseNav"      : true
+  }
+}

@@ -7,10 +7,9 @@ const Ingredient = require('../models/ingredient');
  *
  * @param req
  * @param res
- * @param next
  * @returns {Promise.<void>}
  */
-async function find(req, res, next) {
+async function find(req, res) {
 	const id = req.value
 		? (req.value.params
 			? req.value.params.id
@@ -42,10 +41,9 @@ async function find(req, res, next) {
  *
  * @param req
  * @param res
- * @param next
  * @returns {Promise.<void>}
  */
-async function save(req, res, next) {
+async function save(req, res) {
 	const ingredient = new Ingredient(req.value.body);
 
 	const ret = await ingredient.save();
@@ -63,10 +61,9 @@ async function save(req, res, next) {
  *
  * @param req
  * @param res
- * @param next
  * @returns {Promise.<void>}
  */
-async function update(req, res, next) {
+async function update(req, res) {
 	const { id } = req.value.params;
 	const values = req.value.body;
 
@@ -85,10 +82,9 @@ async function update(req, res, next) {
  *
  * @param req
  * @param res
- * @param next
  * @returns {Promise.<void>}
  */
-async function remove(req, res, next) {
+async function remove(req, res) {
 	const { id } = req.value.params;
 
 	const ingredient = await Ingredient.findById(id);

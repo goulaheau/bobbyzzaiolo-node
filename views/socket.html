@@ -12,6 +12,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script src="../helpers/view.js"></script>
 <script>
+	/**
+     * Change IP if the server is not launch on local.
+     * Example : 'https://bobbyzzaiolo-node-goulaheau.c9users.io'
+     */
 	var socket = io.connect('http://localhost:' + helperView.port + '/');
 
 	// Pizzas' sockets

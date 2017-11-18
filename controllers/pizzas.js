@@ -3,14 +3,25 @@
 const Pizza = require('../models/pizza');
 
 /**
+ * Pizzas' controller.
+ * @namespace PizzaController
+ */
+
+/**
  * Find all pizzas or one by his id.
  *
- * @param req
- * @param res
- * @param next
- * @returns {Promise.<void>}
+ * @function find
+ * @memberof PizzaController
+ * @param {Object} req - Request object.
+ * @param {string} req.params.id - Pizza's ID to find.
+ * @param {string} req.query.name - Pizza's name to query.
+ * @param {string} req.query.description - Pizza's description to query.
+ * @param {string} req.query.price - Pizza's price to query.
+ * @param {string} req.query.image - Pizza's image to query.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
-async function find(req, res, next) {
+async function find(req, res) {
 	const id = req.value
 		? (req.value.params
 			? req.value.params.id
@@ -40,12 +51,14 @@ async function find(req, res, next) {
 /**
  * Create a pizza.
  *
- * @param req
- * @param res
- * @param next
- * @returns {Promise.<void>}
+ * @function create
+ * @memberof PizzaController
+ * @param {Object} req - Request object.
+ * @param {Pizza} req.body - Pizza's object to create.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
-async function create(req, res, next) {
+async function create(req, res) {
 	const pizza = new Pizza(req.value.body);
 
 	const ret = await Pizza.populate(await pizza.save(), 'ingredients');
@@ -61,12 +74,15 @@ async function create(req, res, next) {
 /**
  * Update a pizza.
  *
- * @param req
- * @param res
- * @param next
- * @returns {Promise.<void>}
+ * @function update
+ * @memberof PizzaController
+ * @param {Object} req - Request object.
+ * @param {string} req.params.id - Pizza's ID to update.
+ * @param {Partial<Pizza>} req.body - New values.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
-async function update(req, res, next) {
+async function update(req, res) {
 	const { id } = req.value.params;
 	const values = req.value.body;
 
@@ -84,12 +100,14 @@ async function update(req, res, next) {
 /**
  * Remove a pizza.
  *
- * @param req
- * @param res
- * @param next
- * @returns {Promise.<void>}
+ * @function remove
+ * @memberof PizzaController
+ * @param {Object} req - Request object.
+ * @param {string} req.params.id - Pizza's ID to remove.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
-async function remove(req, res, next) {
+async function remove(req, res) {
 	const { id } = req.value.params;
 
 	const pizza = await Pizza.findById(id);
