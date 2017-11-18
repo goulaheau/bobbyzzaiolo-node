@@ -1,5 +1,6 @@
 {
-  "name": "Bobbyzzaiolo NodeJS",
+  "name": "bobbyzzaiolo-node",
+  "description": "Bobbyzzaiolo NodeJS. RESTful API in NodeJS + Express + Mongoose for Pizzas and Ingredients.",
   "author": {
     "name": "Enzo Cornand",
     "email": "goulaheau@gmail.com"
