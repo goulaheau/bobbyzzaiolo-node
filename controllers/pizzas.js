@@ -8,7 +8,7 @@ const Pizza = require('../models/pizza');
  */
 
 /**
- * Find all pizzas or one by his id.
+ * Find all pizzas responding to the query or one by his id.
  *
  * @function find
  * @memberof PizzaController
@@ -103,7 +103,8 @@ async function update(req, res) {
  * @function remove
  * @memberof PizzaController
  * @param {Object} req - Request object.
- * @param {string} req.params.id - Pizza's ID to remove.
+ * @param {string} req.params.id - Pizza's ID to update.
+ * @param {Partial<Pizza>} req.body - New values.
  * @param {Object} res - Response object.
  * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */

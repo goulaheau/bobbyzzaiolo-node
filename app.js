@@ -18,7 +18,9 @@ const server = require('http').Server(app);
 const io     = require('socket.io')(server);
 
 // Connection to mongodb.
-mongoose.connect(config.DBHost, { useMongoClient: true });
+mongoose.connect(config.DBHost, { useMongoClient: true }, (err) => {
+	if (err) throw err;
+});
 mongoose.Promise = global.Promise;
 
 // Middlewares.

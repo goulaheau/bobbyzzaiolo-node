@@ -4,7 +4,7 @@ RESTful API in NodeJS + Express + Mongoose for Pizzas and Ingredients.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -16,16 +16,22 @@ These instructions will get you a copy of the project up and running on your loc
 
 Clone this repo or just download it as a zip and uncompress it in a folder.
 
-Then, inside the folder, install the dependencies.
+Then, inside the folder, install the dependencies:
 
 ```
 npm i
 ```
 
-That's all, you can now start the server.
+That's all, you can now start the server:
 
 ```
 npm start
+```
+
+/!\ Don't forget to start mongod before launching the server:
+
+```
+mongod
 ```
 
 ## Running the tests
@@ -43,22 +49,6 @@ npm test
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-
-### Generate your own documentation
-
-Install globally jsdoc.
-
-```
-npm i jsdoc --save
-```
-
-Now use this command.
-
-```
-jsdoc a-file-to-documentate.js -t ./node_modules/ink-docstrap/template -c jsdoc.json -d doc
-```
-
-You can change the theme by modifying in jsdoc.json the property ``` template ```.
 
 ### Routes
 
@@ -82,6 +72,26 @@ PATCH  /ingredients/:id - Update an ingredient by his id.
 DELETE /ingredients/:id - Delete an ingredient by his id.
 ```
 
+See the [JSDoc Documentation](docs/jsdoc/index.html) for further details.
+
+You can see all the code by using this view [Docco Documentation](docs/docco/app.html).
+
+### Sockets.io
+
+Events emitted:
+
+```
+[Pizza] Created 
+[Pizza] Updated 
+[Pizza] Removed 
+
+[Ingredient] Created 
+[Ingredient] Updated 
+[Ingredient] Removed 
+```
+
+All the events transfer the object treated.
+
 ### Folder structure
 
 ```
@@ -102,8 +112,9 @@ project ----------------------- Root folder
 │   │   pizzas.js ------------- Pizzas' controller
 │   │   pizzas.spec.js -------- Pizzas' controller tests
 │
-├────doc ---------------------- Documentation 
-│   │   ...
+├────docs --------------------- Documentation  files
+│   │   docco ----------------- Documentation generated using Docco
+│   │   jsdoc ----------------- Documentation generated using JSDoc
 │ 
 ├────helpers ------------------ Helpers files
 │   │   router.js ------------- Router validation helper
@@ -119,5 +130,38 @@ project ----------------------- Root folder
 │
 └───views --------------------- Views files
     │   socket.html ----------- Socket's view file (test purpose)
+```
+
+### Generate your own documentation
+
+#### JSDoc
+
+Install globally jsdoc:
+
+```
+npm i jsdoc -g
+```
+
+Now use this command:
+
+```
+jsdoc controllers/pizzas.js controllers/ingredients.js models/ingredient.js models/pizza.js -t ./node_modules/ink-docstrap/template -c jsdoc.json -d docs/jsdoc
+
+```
+
+You can change the theme by modifying in jsdoc.json the property ``` template ```.
+
+#### Docco
+
+Install globally docco:
+
+```
+npm i docco -g
+```
+
+Now use this command:
+
+```
+docco *.js controllers/*.js helpers/*.js models/*.js routes/*.js -o docs/docco
 ```
 

@@ -3,11 +3,23 @@
 const Ingredient = require('../models/ingredient');
 
 /**
- * Find all ingredients or one by his id.
+ * Ingredients' controller.
  *
- * @param req
- * @param res
- * @returns {Promise.<void>}
+ * @namespace IngredientController
+ */
+
+/**
+ * Find all ingredients responding to the query or one by his id.
+ *
+ * @function find
+ * @memberof IngredientController
+ * @param {Object} req - Request object.
+ * @param {string} req.params.id - Ingredient's ID to find.
+ * @param {string} req.query.name - Ingredient's name to query.
+ * @param {string} req.query.weight - Ingredient's weight to query.
+ * @param {string} req.query.price - Ingredient's price to query.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
 async function find(req, res) {
 	const id = req.value
@@ -37,11 +49,14 @@ async function find(req, res) {
 }
 
 /**
- * Save an ingredient.
+ * Create an ingredient.
  *
- * @param req
- * @param res
- * @returns {Promise.<void>}
+ * @function create
+ * @memberof IngredientController
+ * @param {Object} req - Request object.
+ * @param {Ingredient} req.body - Ingredient's object to create.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
 async function save(req, res) {
 	const ingredient = new Ingredient(req.value.body);
@@ -59,9 +74,13 @@ async function save(req, res) {
 /**
  * Update an ingredient.
  *
- * @param req
- * @param res
- * @returns {Promise.<void>}
+ * @function update
+ * @memberof IngredientController
+ * @param {Object} req - Request object.
+ * @param {string} req.params.id - Ingredient's ID to update.
+ * @param {Partial<Ingredient>} req.body - New values.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
 async function update(req, res) {
 	const { id } = req.value.params;
@@ -80,9 +99,13 @@ async function update(req, res) {
 /**
  * Remove an ingredient.
  *
- * @param req
- * @param res
- * @returns {Promise.<void>}
+ * @function remove
+ * @memberof IngredientController
+ * @param {Object} req - Request object.
+ * @param {string} req.params.id - Ingredient's ID to update.
+ * @param {Partial<Ingredient>} req.body - New values.
+ * @param {Object} res - Response object.
+ * @returns {Promise.<void>} Call res.status() with a status code to say what happens and res.json() to send data if there is any.
  */
 async function remove(req, res) {
 	const { id } = req.value.params;
