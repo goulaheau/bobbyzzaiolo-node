@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>pizzas.spec.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="app.spec.html">
+                  app.spec.js
+                </a>
+              
+                
+                <a class="source" href="ingredients.html">
+                  ingredients.js
+                </a>
+              
+                
+                <a class="source" href="ingredients.spec.html">
+                  ingredients.spec.js
+                </a>
+              
+                
+                <a class="source" href="pizzas.html">
+                  pizzas.js
+                </a>
+              
+                
+                <a class="source" href="pizzas.spec.html">
+                  pizzas.spec.js
+                </a>
+              
+                
+                <a class="source" href="router.html">
+                  router.js
+                </a>
+              
+                
+                <a class="source" href="view.html">
+                  view.js
+                </a>
+              
+                
+                <a class="source" href="ingredient.html">
+                  ingredient.js
+                </a>
+              
+                
+                <a class="source" href="pizza.html">
+                  pizza.js
+                </a>
+              
+                
+                <a class="source" href="ingredients.html">
+                  ingredients.js
+                </a>
+              
+                
+                <a class="source" href="pizzas.html">
+                  pizzas.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>pizzas.spec.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> chai      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chai'</span>);
+<span class="hljs-keyword">const</span> chaiHttp  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chai-http'</span>);
+<span class="hljs-keyword">const</span> base64Img = <span class="hljs-built_in">require</span>(<span class="hljs-string">'base64-img'</span>);
+<span class="hljs-keyword">const</span> app       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../app'</span>);
+
+<span class="hljs-keyword">const</span> Pizza = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/pizza'</span>);
+
+chai.use(chaiHttp);
+chai.should();
+
+<span class="hljs-comment">/**
+ * All the tests for the Pizzas' routes.
+ */</span>
+describe(<span class="hljs-string">'Pizzas\' routes'</span>, () =&gt; {
+	<span class="hljs-comment">/**
+	 * Clear the Pizzas' table.
+	 */</span>
+	beforeEach(<span class="hljs-function"><span class="hljs-params">done</span> =&gt;</span> {
+		Pizza.remove({}, () =&gt; done());
+	});
+
+	describe(<span class="hljs-string">'GET /pizzas'</span>, () =&gt; {
+		it(<span class="hljs-string">'should find 0 pizzas'</span>, done =&gt; {
+			chai.request(app)
+				.get(<span class="hljs-string">'/pizzas'</span>)
+				.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+					res.should.have.status(<span class="hljs-number">200</span>);
+					res.body.should.be.a(<span class="hljs-string">'array'</span>);
+					res.body.length.should.be.eql(<span class="hljs-number">0</span>);
+					done();
+				});
+		});
+	});
+
+	describe(<span class="hljs-string">'POST /pizzas'</span>, () =&gt; {
+		it(<span class="hljs-string">'should not create a pizza without description'</span>, done =&gt; {
+			base64Img.base64(<span class="hljs-string">'asserts/pizzas/olives-a-la-pizza.jpg'</span>, (err, data) =&gt; {
+				<span class="hljs-keyword">let</span> pizza = {
+					<span class="hljs-attr">name</span>       : <span class="hljs-string">'Olives à la pizza'</span>,
+					<span class="hljs-attr">price</span>      : <span class="hljs-string">'10'</span>,
+					<span class="hljs-attr">image</span>      : data,
+					<span class="hljs-attr">ingredients</span>: []
+				};
+
+				chai.request(app)
+					.post(<span class="hljs-string">'/pizzas'</span>)
+					.send(pizza)
+					.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+						res.should.have.status(<span class="hljs-number">400</span>);
+						res.body.details[<span class="hljs-number">0</span>].message.should.be.eql(
+							<span class="hljs-string">'"description" is required'</span>);
+						done();
+					});
+			});
+		});
+
+		it(<span class="hljs-string">'should create a pizza'</span>, done =&gt; {
+			base64Img.base64(<span class="hljs-string">'asserts/pizzas/olives-a-la-pizza.jpg'</span>, (err, data) =&gt; {
+				<span class="hljs-keyword">let</span> pizza = {
+					<span class="hljs-attr">name</span>       : <span class="hljs-string">'Olives à la pizza'</span>,
+					<span class="hljs-attr">description</span>: <span class="hljs-string">'Pizza avec toutes sortes d\'olives.'</span>,
+					<span class="hljs-attr">price</span>      : <span class="hljs-string">'10'</span>,
+					<span class="hljs-attr">image</span>      : data,
+					<span class="hljs-attr">ingredients</span>: []
+				};
+
+				chai.request(app)
+					.post(<span class="hljs-string">'/pizzas'</span>)
+					.send(pizza)
+					.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+						res.should.have.status(<span class="hljs-number">201</span>);
+						res.body.should.have.property(<span class="hljs-string">'_id'</span>);
+						res.body.name.should.be.eql(<span class="hljs-string">'Olives à la pizza'</span>);
+						res.body.description.should.be.eql(
+							<span class="hljs-string">'Pizza avec toutes sortes d\'olives.'</span>);
+						res.body.price.should.be.eql(<span class="hljs-string">'10'</span>);
+						res.body.image.should.be.eql(data);
+						res.body.ingredients.length.should.be.eql(<span class="hljs-number">0</span>);
+						done();
+					});
+			});
+		});
+	});
+
+	describe(<span class="hljs-string">'GET /pizzas/:id'</span>, () =&gt; {
+		it(<span class="hljs-string">'should find a pizza by the given id'</span>, done =&gt; {
+			base64Img.base64(<span class="hljs-string">'asserts/pizzas/olives-a-la-pizza.jpg'</span>, (err, data) =&gt; {
+				<span class="hljs-keyword">let</span> pizza = <span class="hljs-keyword">new</span> Pizza({
+					<span class="hljs-attr">name</span>       : <span class="hljs-string">'Pizza aux olives dénoyautées'</span>,
+					<span class="hljs-attr">description</span>: <span class="hljs-string">'Pizza avec des olives dénoyautées.'</span>,
+					<span class="hljs-attr">price</span>      : <span class="hljs-string">'7.5'</span>,
+					<span class="hljs-attr">image</span>      : data,
+					<span class="hljs-attr">ingredients</span>: []
+				});
+
+				pizza.save(<span class="hljs-function">(<span class="hljs-params">err, pizza</span>) =&gt;</span> {
+					chai.request(app)
+						.get(<span class="hljs-string">`/pizzas/<span class="hljs-subst">${pizza._id}</span>`</span>)
+						.send(pizza)
+						.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+							res.should.have.status(<span class="hljs-number">200</span>);
+							res.body._id.should.be.eql(<span class="hljs-string">`<span class="hljs-subst">${pizza._id}</span>`</span>);
+							res.body.name.should.be.eql(<span class="hljs-string">'Pizza aux olives dénoyautées'</span>);
+							res.body.description.should.be.eql(
+								<span class="hljs-string">'Pizza avec des olives dénoyautées.'</span>);
+							res.body.price.should.be.eql(<span class="hljs-string">'7.5'</span>);
+							res.body.image.should.be.eql(data);
+							res.body.ingredients.length.should.be.eql(<span class="hljs-number">0</span>);
+							done();
+						});
+				});
+			});
+		});
+	});
+
+	describe(<span class="hljs-string">'PUT /pizzas/:id'</span>, () =&gt; {
+		it(<span class="hljs-string">'should update an pizza by the given id'</span>, done =&gt; {
+			base64Img.base64(<span class="hljs-string">'asserts/pizzas/olives-a-la-pizza.jpg'</span>, (err, data) =&gt; {
+				<span class="hljs-keyword">let</span> pizza = <span class="hljs-keyword">new</span> Pizza({
+					<span class="hljs-attr">name</span>       : <span class="hljs-string">'izza aux olives noires'</span>,
+					<span class="hljs-attr">description</span>: <span class="hljs-string">'Pizza avec des olives noires.'</span>,
+					<span class="hljs-attr">price</span>      : <span class="hljs-string">'7.5'</span>,
+					<span class="hljs-attr">image</span>      : data,
+					<span class="hljs-attr">ingredients</span>: []
+				});
+				pizza.save(<span class="hljs-function">(<span class="hljs-params">err, pizza</span>) =&gt;</span> {
+					chai.request(app)
+						.put(<span class="hljs-string">`/pizzas/<span class="hljs-subst">${pizza._id}</span>`</span>)
+						.send({
+							<span class="hljs-attr">name</span>       : <span class="hljs-string">'Pizza aux olives noires'</span>,
+							<span class="hljs-attr">description</span>: <span class="hljs-string">'Pizza avec des olives noires.'</span>,
+							<span class="hljs-attr">price</span>      : <span class="hljs-string">'7.5'</span>,
+							<span class="hljs-attr">image</span>      : data,
+							<span class="hljs-attr">ingredients</span>: []
+						})
+						.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+							res.should.have.status(<span class="hljs-number">200</span>);
+							res.body._id.should.be.eql(<span class="hljs-string">`<span class="hljs-subst">${pizza._id}</span>`</span>);
+							res.body.name.should.be.eql(<span class="hljs-string">'Pizza aux olives noires'</span>);
+							res.body.description.should.be.eql(
+								<span class="hljs-string">'Pizza avec des olives noires.'</span>);
+							res.body.price.should.be.eql(<span class="hljs-string">'7.5'</span>);
+							res.body.image.should.be.eql(data);
+							res.body.ingredients.length.should.be.eql(<span class="hljs-number">0</span>);
+							done();
+						});
+				});
+			});
+		});
+	});
+
+	describe(<span class="hljs-string">'PATCH /pizzas/:id'</span>, () =&gt; {
+		it(<span class="hljs-string">'should update an pizza by the given id'</span>, done =&gt; {
+			base64Img.base64(<span class="hljs-string">'asserts/pizzas/olives-a-la-pizza.jpg'</span>, (err, data) =&gt; {
+				<span class="hljs-keyword">let</span> pizza = <span class="hljs-keyword">new</span> Pizza({
+					<span class="hljs-attr">name</span>       : <span class="hljs-string">'izza aux olives vertes'</span>,
+					<span class="hljs-attr">description</span>: <span class="hljs-string">'Pizza avec des olives vertes.'</span>,
+					<span class="hljs-attr">price</span>      : <span class="hljs-string">'7.5'</span>,
+					<span class="hljs-attr">image</span>      : data,
+					<span class="hljs-attr">ingredients</span>: []
+				});
+				pizza.save(<span class="hljs-function">(<span class="hljs-params">err, pizza</span>) =&gt;</span> {
+					chai.request(app)
+						.patch(<span class="hljs-string">`/pizzas/<span class="hljs-subst">${pizza._id}</span>`</span>)
+						.send({
+							<span class="hljs-attr">name</span>: <span class="hljs-string">'Pizza aux olives vertes'</span>
+						})
+						.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+							res.should.have.status(<span class="hljs-number">200</span>);
+							res.body._id.should.be.eql(<span class="hljs-string">`<span class="hljs-subst">${pizza._id}</span>`</span>);
+							res.body.name.should.be.eql(<span class="hljs-string">'Pizza aux olives vertes'</span>);
+							res.body.description.should.be.eql(
+								<span class="hljs-string">'Pizza avec des olives vertes.'</span>);
+							res.body.price.should.be.eql(<span class="hljs-string">'7.5'</span>);
+							res.body.image.should.be.eql(data);
+							res.body.ingredients.length.should.be.eql(<span class="hljs-number">0</span>);
+							done();
+						});
+				});
+			});
+		});
+	});
+
+	describe(<span class="hljs-string">'DELETE /pizzas/:id'</span>, () =&gt; {
+		it(<span class="hljs-string">'should delete an pizza by the given id'</span>, done =&gt; {
+			base64Img.base64(<span class="hljs-string">'asserts/pizzas/olives-a-la-pizza.jpg'</span>, (err, data) =&gt; {
+				<span class="hljs-keyword">let</span> pizza = <span class="hljs-keyword">new</span> Pizza({
+					<span class="hljs-attr">name</span>       : <span class="hljs-string">'Pizza aux olives pimentées'</span>,
+					<span class="hljs-attr">description</span>: <span class="hljs-string">'Pizza avec des olives pimentées.'</span>,
+					<span class="hljs-attr">price</span>      : <span class="hljs-string">'7.5'</span>,
+					<span class="hljs-attr">image</span>      : data,
+					<span class="hljs-attr">ingredients</span>: []
+				});
+				pizza.save(<span class="hljs-function">(<span class="hljs-params">err, pizza</span>) =&gt;</span> {
+					chai.request(app)
+						.delete(<span class="hljs-string">`/pizzas/<span class="hljs-subst">${pizza._id}</span>`</span>)
+						.end(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+							res.should.have.status(<span class="hljs-number">200</span>);
+							res.body._id.should.be.eql(<span class="hljs-string">`<span class="hljs-subst">${pizza._id}</span>`</span>);
+							res.body.name.should.be.eql(<span class="hljs-string">'Pizza aux olives pimentées'</span>);
+							res.body.description.should.be.eql(
+								<span class="hljs-string">'Pizza avec des olives pimentées.'</span>);
+							res.body.price.should.be.eql(<span class="hljs-string">'7.5'</span>);
+							res.body.image.should.be.eql(data);
+							res.body.ingredients.length.should.be.eql(<span class="hljs-number">0</span>);
+							done();
+						});
+				});
+			});
+		});
+	});
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
